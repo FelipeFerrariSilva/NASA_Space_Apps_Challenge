@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Vulnerabilidade Urbana</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <img src="images/image.png" alt="Urban Vision Logo" style="height: 40px; margin-right: 10px;">
+            <h1 class="title">URBAN VISION</h1>
+        </div>
+        <nav class="nav">
+            <a href="index.html" class="nav-link active">Início</a>
+            <a href="#" class="nav-link">Sobre o Projeto</a>
+            <a href="contribua.html" class="nav-link">Contribua com Informações</a>
+        </nav>
+        <div class="header-right">
+        
+           
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2 class="sidebar-title">Filtros de Dados</h2>
+            <div class="filter-group">
+                <div class="filter-item">
+                    <svg class="filter-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>Densidade Populacional</span>
+                    <label class="toggle">
+                        <input type="checkbox" id="densidade" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="filter-item">
+                    <svg class="filter-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span>Infraestrutura Urbana</span>
+                    <label class="toggle">
+                        <input type="checkbox" id="infraestrutura">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="filter-item">
+                    <svg class="filter-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    <span>Poluição Ar</span>
+                    <label class="toggle">
+                        <input type="checkbox" id="poluicao" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="filter-item">
+                    <svg class="filter-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                    </svg>
+                    <span>Acesso à Saúde</span>
+                    <label class="toggle">
+                        <input type="checkbox" id="saude">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="filter-item">
+                    <svg class="filter-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                        <path d="M2 17l10 5 10-5"></path>
+                        <path d="M2 12l10 5 10-5"></path>
+                    </svg>
+                    <span>Cobertura Vegetal</span>
+                    <label class="toggle">
+                        <input type="checkbox" id="cobertura" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="filter-item">
+                    <svg class="filter-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 8l-5-5-5 5M12 3v12"></path>
+                    </svg>
+                    <span>Risco Climático</span>
+                    <label class="toggle">
+                        <input type="checkbox" id="risco">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Map Area -->
+        <main class="map-container">
+            <div id="map" class="map"></div>
+        </main>
+
+        <!-- Info Panel -->
+        <aside class="info-panel">
+            <h2 class="info-title">Informações da Região Selecionada</h2>
+            <div class="region-name">Maringá - Paraná</div>
+            <div class="vulnerability-badge">
+                <div class="badge-label">Índice de Vulnerabilidade:</div>
+                <div class="badge-value medium">MÉDIO</div>
+            </div>
+            <div class="region-info">Região: Zona 7 - Centro</div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">População Estimada:</div>
+                    <div class="stat-value">430,000 hab.</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Densidade:</div>
+                    <div class="stat-value">733 hab/km²</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Cobertura Vegetal:</div>
+                    <div class="stat-value high">Alta (48%)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Qualidade do Ar (PM2.5):</div>
+                    <div class="stat-value medium">Moderada</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Infraestrutura:</div>
+                    <div class="stat-value good">Boa</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Acesso à Saúde:</div>
+                    <div class="stat-value good">Bom</div>
+                </div>
+            </div>
+
+            <div class="vulnerability-chart">
+                <svg width="200" height="200" viewBox="0 0 200 200">
+                    <circle cx="100" cy="100" r="80" fill="none" stroke="#E5E7EB" stroke-width="20"></circle>
+                    <circle cx="100" cy="100" r="80" fill="none" stroke="#F5A623" stroke-width="20" 
+                            stroke-dasharray="251.2" stroke-dashoffset="125.6" 
+                            transform="rotate(-90 100 100)" class="progress-circle"></circle>
+                    <text x="100" y="95" text-anchor="middle" font-size="36" font-weight="bold" fill="#1F2937">50%</text>
+                    <text x="100" y="115" text-anchor="middle" font-size="14" fill="#6B7280">Vulnerável</text>
+                </svg>
+            </div>
+
+            <div class="highlights">
+                <h3 class="highlights-title">Destaque de Maringá:</h3>
+                <ul class="highlights-list">
+                    <li>"Cidade Verde" - Alta cobertura arbórea</li>
+                    <li>Planejamento urbano modelo</li>
+                    <li>Monitoramento ambiental contínuo</li>
+                </ul>
+            </div>
+
+            <button class="btn-download">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download Relatório
+            </button>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-label">Fontes de Dados:</div>
+            <div class="footer-sources">
+                <span class="source-badge">NASA</span>
+                <span class="source-badge">GHSL</span>
+                <span class="source-badge">WorldPop</span>
+                <span class="source-badge">Copernicus</span>
+                <span class="source-badge">WRI</span>
+            </div>
+        </div>
+        <div class="footer-info">
+            Integrando dados de NASA Worldview, Earth Observatory, GHSL, WorldPop, Copernicus e WRI
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
